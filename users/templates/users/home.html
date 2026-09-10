@@ -1,0 +1,17 @@
+```django
+{% extends 'users/base.html' %}
+{% load static %}
+
+{% block title %}Inicio{% endblock %}
+
+{% block content %}
+<div class="card hero">
+    <img class="logo" src="{% static 'itmea_logo.png' %}" alt="Logo ITMEA">
+    <h1>Campus ITMEA</h1>
+    <p>Plataforma académica para administradores, docentes y estudiantes.</p>
+
+    <a class="btn" href="{% url 'login' %}">Ingresar</a>
+    <a class="btn gold" href="{% url 'register' %}">Registrarse</a>
+</div>
+{% endblock %}
+```

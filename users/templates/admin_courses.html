@@ -1,0 +1,16 @@
+<h2>Mis cursos</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Crear Curso</button>
+</form>
+
+<h3>Lista de cursos:</h3>
+<ul>
+    {% for curso in cursos %}
+        <li>{{ curso.nombre }} - {{ curso.docente.username }}</li>
+    {% empty %}
+        <li>No hay cursos creados.</li>
+    {% endfor %}
+</ul>

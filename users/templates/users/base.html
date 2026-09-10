@@ -1,0 +1,906 @@
+{% load static %}
+
+<!doctype html>
+<html lang="es">
+
+<head>
+
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>
+        {% block title %}Campus ITMEA{% endblock %}
+    </title>
+
+
+    <style>
+
+        /* =====================================================
+           VARIABLES
+           ===================================================== */
+
+        :root {
+            --green: #075b3a;
+            --green-dark: #05452d;
+            --green-light: #e3f0ea;
+
+            --light: #eef7f2;
+
+            --gold: #c9a227;
+            --gold-light: #eadb9a;
+
+            --dark: #123;
+            --white: #fff;
+
+            --gray: #65756e;
+            --gray-light: #f3f5f4;
+
+            --danger: #a33;
+        }
+
+
+        /* =====================================================
+           CONFIGURACIÓN GENERAL
+           ===================================================== */
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+            margin: 0;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background: var(--light);
+
+            color: #17352a;
+        }
+
+
+        /* =====================================================
+           BARRA SUPERIOR
+           ===================================================== */
+
+        nav {
+            background: var(--green);
+
+            color: white;
+
+            min-height: 70px;
+
+            padding: 10px 4%;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 20px;
+        }
+
+
+        /* =====================================================
+           MARCA ITMEA
+           ===================================================== */
+
+        .brand {
+            color: white;
+
+            text-decoration: none;
+
+            font-weight: bold;
+
+            font-size: 21px;
+
+            letter-spacing: .3px;
+        }
+
+
+        .brand:hover {
+            color: var(--gold-light);
+        }
+
+
+        /* =====================================================
+           ÁREA DEL USUARIO
+           ===================================================== */
+
+        .user-area {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+        }
+
+
+        .user-profile {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            color: white;
+
+            text-decoration: none;
+
+            padding: 4px 8px;
+
+            border-radius: 10px;
+
+            transition: .2s;
+        }
+
+
+        .user-profile:hover {
+
+            background: rgba(255,255,255,.10);
+        }
+
+
+        /* =====================================================
+           FOTO DEL USUARIO
+           ===================================================== */
+
+        .profile-photo {
+
+            width: 48px;
+
+            height: 48px;
+
+            border-radius: 50%;
+
+            object-fit: cover;
+
+            border: 2px solid var(--gold);
+
+            background: white;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            flex-shrink: 0;
+        }
+
+
+        /* =====================================================
+           FOTO CUANDO NO EXISTE
+           ===================================================== */
+
+        .profile-placeholder {
+
+            background: var(--gold);
+
+            color: var(--green-dark);
+
+            font-size: 19px;
+
+            font-weight: bold;
+        }
+
+
+        /* =====================================================
+           INFORMACIÓN DEL USUARIO
+           ===================================================== */
+
+        .user-info {
+
+            display: flex;
+
+            flex-direction: column;
+
+            line-height: 1.2;
+        }
+
+
+        .user-name {
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            white-space: nowrap;
+        }
+
+
+        .user-role {
+
+            font-size: 12px;
+
+            opacity: .85;
+
+            margin-top: 4px;
+        }
+
+
+        /* =====================================================
+           FORMULARIO LOGOUT
+           ===================================================== */
+
+        .logout-form {
+
+            display: inline;
+
+            margin: 0;
+        }
+
+
+        /* =====================================================
+           CONTENEDOR PRINCIPAL
+           ===================================================== */
+
+        .wrap {
+
+            max-width: 1200px;
+
+            margin: 28px auto;
+
+            padding: 0 18px;
+        }
+
+
+        /* =====================================================
+           TARJETAS
+           ===================================================== */
+
+        .card {
+
+            background: white;
+
+            border-radius: 14px;
+
+            padding: 20px;
+
+            margin: 15px 0;
+
+            box-shadow: 0 3px 15px #0001;
+        }
+
+
+        .grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(240px, 1fr)
+                );
+
+            gap: 15px;
+        }
+
+
+        /* =====================================================
+           BOTONES
+           ===================================================== */
+
+        .btn {
+
+            display: inline-block;
+
+            padding: 10px 15px;
+
+            border: 0;
+
+            border-radius: 8px;
+
+            background: var(--green);
+
+            color: white;
+
+            text-decoration: none;
+
+            cursor: pointer;
+
+            font-size: 14px;
+        }
+
+
+        .btn:hover {
+
+            opacity: .9;
+        }
+
+
+        .btn.gold {
+
+            background: var(--gold);
+
+            color: #222;
+        }
+
+
+        .btn.gray {
+
+            background: var(--gray);
+        }
+
+
+        .btn.red {
+
+            background: var(--danger);
+        }
+
+
+        .btn + .btn {
+
+            margin-left: 6px;
+        }
+
+
+        /* =====================================================
+           TABLAS
+           ===================================================== */
+
+        table {
+
+            width: 100%;
+
+            border-collapse: collapse;
+
+            background: white;
+        }
+
+
+        th,
+        td {
+
+            padding: 10px;
+
+            border-bottom: 1px solid #ddd;
+
+            text-align: left;
+        }
+
+
+        th {
+
+            background: var(--green-light);
+        }
+
+
+        tr:hover {
+
+            background: #fafdfb;
+        }
+
+
+        /* =====================================================
+           FORMULARIOS
+           ===================================================== */
+
+        input,
+        select,
+        textarea {
+
+            width: 100%;
+
+            padding: 10px;
+
+            margin: 6px 0 12px;
+
+            border: 1px solid #bbc9c2;
+
+            border-radius: 7px;
+
+            font-family: inherit;
+        }
+
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+
+            outline: none;
+
+            border-color: var(--green);
+
+            box-shadow:
+                0 0 0 2px
+                rgba(7,91,58,.10);
+        }
+
+
+        textarea {
+
+            min-height: 110px;
+
+            resize: vertical;
+        }
+
+
+        /* =====================================================
+           MENSAJES
+           ===================================================== */
+
+        .msg {
+
+            padding: 12px;
+
+            border-radius: 8px;
+
+            background: #e1f5e8;
+
+            margin: 10px 0;
+        }
+
+
+        .errorlist {
+
+            color: #a00;
+        }
+
+
+        .muted {
+
+            color: #68766f;
+        }
+
+
+        /* =====================================================
+           ACCIONES
+           ===================================================== */
+
+        .actions {
+
+            display: flex;
+
+            gap: 8px;
+
+            flex-wrap: wrap;
+        }
+
+
+        /* =====================================================
+           ETIQUETAS
+           ===================================================== */
+
+        .pill {
+
+            display: inline-block;
+
+            padding: 4px 9px;
+
+            border-radius: 20px;
+
+            background: #e6f1ec;
+        }
+
+
+        /* =====================================================
+           PÁGINA PRINCIPAL
+           ===================================================== */
+
+        .hero {
+
+            text-align: center;
+
+            padding: 60px 20px;
+        }
+
+
+        .logo {
+
+            max-width: 150px;
+
+            max-height: 100px;
+        }
+
+
+        small {
+
+            color: #667;
+        }
+
+
+        /* =====================================================
+           TÍTULOS
+           ===================================================== */
+
+        h1,
+        h2,
+        h3 {
+
+            color: #123;
+
+        }
+
+
+        h1 {
+
+            font-size: 32px;
+        }
+
+
+        h2 {
+
+            font-size: 26px;
+        }
+
+
+        h3 {
+
+            font-size: 20px;
+        }
+
+
+        /* =====================================================
+           TARJETAS DEL DASHBOARD
+           ===================================================== */
+
+        .dashboard-card {
+
+            background: white;
+
+            border-radius: 14px;
+
+            padding: 22px;
+
+            box-shadow:
+                0 3px 15px #0001;
+
+            transition:
+                transform .2s,
+                box-shadow .2s;
+        }
+
+
+        .dashboard-card:hover {
+
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 8px 22px #0002;
+        }
+
+
+        .dashboard-icon {
+
+            font-size: 32px;
+
+            margin-bottom: 10px;
+        }
+
+
+        /* =====================================================
+           CABECERA DEL DASHBOARD
+           ===================================================== */
+
+        .dashboard-header {
+
+            background: white;
+
+            border-radius: 15px;
+
+            padding: 25px;
+
+            margin-bottom: 20px;
+
+            border-left:
+                5px solid var(--gold);
+
+            box-shadow:
+                0 3px 15px #0001;
+        }
+
+
+        .dashboard-header h1 {
+
+            margin-top: 0;
+
+            margin-bottom: 8px;
+        }
+
+
+        .dashboard-header p {
+
+            margin-bottom: 0;
+
+            color: #68766f;
+        }
+
+
+        /* =====================================================
+           BADGE DEL ROL
+           ===================================================== */
+
+        .role-badge {
+
+            display: inline-block;
+
+            margin-top: 7px;
+
+            padding: 4px 10px;
+
+            border-radius: 20px;
+
+            background: var(--green-light);
+
+            color: var(--green);
+
+            font-size: 12px;
+
+            font-weight: bold;
+        }
+
+
+        /* =====================================================
+           MÓVILES
+           ===================================================== */
+
+        @media (max-width: 700px) {
+
+            nav {
+
+                padding:
+                    10px 18px;
+
+                min-height: 64px;
+            }
+
+
+            .brand {
+
+                font-size: 18px;
+            }
+
+
+            .user-info {
+
+                display: none;
+            }
+
+
+            .profile-photo {
+
+                width: 42px;
+
+                height: 42px;
+            }
+
+
+            .user-area {
+
+                gap: 8px;
+            }
+
+
+            .btn.gray {
+
+                padding:
+                    9px 12px;
+            }
+
+
+            .wrap {
+
+                margin-top: 18px;
+
+                padding:
+                    0 12px;
+            }
+
+
+            h1 {
+
+                font-size: 26px;
+            }
+
+
+            h2 {
+
+                font-size: 22px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     BARRA SUPERIOR
+     ===================================================== -->
+
+<nav>
+
+
+    <!-- MARCA -->
+    <div>
+
+        <a
+            class="brand"
+            href="{% url 'dashboard' %}"
+        >
+            ITMEA Campus
+        </a>
+
+    </div>
+
+
+    <!-- USUARIO -->
+    <div>
+
+        {% if user.is_authenticated %}
+
+
+        <div class="user-area">
+
+
+            <!-- PERFIL -->
+
+            {% if user.role == 'student' %}
+
+                <a
+                    class="user-profile"
+                    href="{% url 'student_profile' %}"
+                >
+
+            {% else %}
+
+                <div class="user-profile">
+
+            {% endif %}
+
+
+                    <!-- FOTO -->
+
+                    {% if user.profile_image %}
+
+                        <img
+                            src="{{ user.profile_image.url }}"
+                            alt="Foto de perfil"
+                            class="profile-photo"
+                        >
+
+                    {% else %}
+
+                        <div
+                            class="profile-photo profile-placeholder"
+                        >
+
+                            {% if user.full_name %}
+
+                                {{ user.full_name|first|upper }}
+
+                            {% else %}
+
+                                {{ user.username|first|upper }}
+
+                            {% endif %}
+
+                        </div>
+
+                    {% endif %}
+
+
+                    <!-- DATOS -->
+
+                    <div class="user-info">
+
+                        <span class="user-name">
+
+                            {{ user.full_name|default:user.username }}
+
+                        </span>
+
+
+                        <span class="user-role">
+
+                            {% if user.role == 'admin' %}
+
+                                Administrador
+
+                            {% elif user.role == 'teacher' %}
+
+                                Docente
+
+                            {% elif user.role == 'student' %}
+
+                                Estudiante
+
+                            {% endif %}
+
+                        </span>
+
+                    </div>
+
+
+            {% if user.role == 'student' %}
+
+                </a>
+
+            {% else %}
+
+                </div>
+
+            {% endif %}
+
+
+            <!-- SALIR -->
+
+            <form
+                class="logout-form"
+                method="post"
+                action="{% url 'logout' %}"
+            >
+
+                {% csrf_token %}
+
+                <button
+                    class="btn gray"
+                    type="submit"
+                >
+                    Salir
+                </button>
+
+            </form>
+
+
+        </div>
+
+
+        {% else %}
+
+            <a href="{% url 'login' %}">
+                Ingresar
+            </a>
+
+        {% endif %}
+
+    </div>
+
+</nav>
+
+
+<!-- =====================================================
+     CONTENIDO
+     ===================================================== -->
+
+<main class="wrap">
+
+
+    <!-- MENSAJES -->
+
+    {% for message in messages %}
+
+        <div class="msg">
+
+            {{ message }}
+
+        </div>
+
+    {% endfor %}
+
+
+    <!-- CONTENIDO DE CADA PÁGINA -->
+
+    {% block content %}
+
+    {% endblock %}
+
+
+</main>
+
+
+</body>
+
+</html>

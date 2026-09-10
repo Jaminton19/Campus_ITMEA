@@ -1,0 +1,1 @@
+{% extends 'users/base.html' %}{% block content %}<h1>Reportes</h1><div class="card">{% for c in courses %}<p><b>{{ c.name }}</b> — {{ c.enrollments.count }} estudiantes — <a href="{% url 'grade_assignments' c.id %}">notas de tareas</a> — <a href="{% url 'attendance' c.id %}">asistencia</a></p>{% empty %}<p>No hay cursos.</p>{% endfor %}</div>{% endblock %}

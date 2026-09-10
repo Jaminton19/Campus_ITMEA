@@ -1,0 +1,105 @@
+{% extends 'users/base.html' %}
+{% load static %}
+
+{% block title %}Ingreso{% endblock %}
+
+{% block content %}
+
+<div class="card login-card">
+
+    <div class="login-logo-container">
+
+        <img
+            src="{% static 'itmea_logo.png' %}"
+            alt="ITMEA"
+            class="login-logo"
+        >
+
+    </div>
+
+    <h1>Ingreso</h1>
+
+    <p class="login-subtitle">
+        Ingresa a tu Campus ITMEA
+    </p>
+
+    <form method="post">
+
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button class="btn login-button" type="submit">
+            Ingresar
+        </button>
+
+    </form>
+
+    <p>
+        <a href="{% url 'register' %}" style="color:white;">
+            Crear cuenta
+        </a>
+    </p>
+
+</div>
+
+
+<style>
+
+.login-card {
+    max-width: 400px;
+    margin: 10px auto;
+    text-align: center;
+    padding: 25px 28px;
+}
+
+.login-logo-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.login-logo {
+    width: 145px;
+    height: 145px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 5px solid var(--gold);
+    background: white;
+    padding: 5px;
+    box-shadow: 0 5px 18px rgba(0,0,0,.15);
+}
+
+.login-card h1 {
+    margin: 5px 0;
+}
+
+.login-subtitle {
+    color: #68766f;
+    margin: 8px 0 18px;
+}
+
+.login-button {
+    width: 100%;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 11px;
+}
+
+@media (max-width: 600px) {
+
+    .login-card {
+        margin: 10px auto;
+        padding: 20px;
+    }
+
+    .login-logo {
+        width: 125px;
+        height: 125px;
+    }
+
+}
+
+</style>
+
+{% endblock %}

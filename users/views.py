@@ -1,3 +1,4 @@
+from decimal import InvalidOperation
 from django.contrib import messages
 from django.contrib.auth import login,logout
 from django.contrib.auth.decorators import login_required
@@ -147,7 +148,13 @@ def grade_assignments(request,curso_id):
     if request.method=='POST':
         for sub in Submission.objects.filter(assignment__curso=curso):
             val=request.POST.get(f'grade_{sub.id}')
-            if val!='': sub.grade=val; sub.feedback=request.POST.get(f'feedback_{sub.id}',''); sub.save()
+            if val is not None and val.strip() != '':
+                try:
+                    sub.grade = val.strip()
+                    sub.feedback = request.POST.get(f'feedback_{sub.id}', '')
+                    sub.save()
+                except (ValueError, TypeError, InvalidOperation):
+                    messages.error(request, f'No se pudo guardar la nota del estudiante {sub.student}.')
         messages.success(request,'Notas de tareas guardadas.')
     return render(request,'users/grade_assignments.html',{'curso':curso,'submissions':Submission.objects.filter(assignment__curso=curso).select_related('student','assignment')})
 @role_required('teacher')

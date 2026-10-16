@@ -149,12 +149,17 @@ def grade_assignments(request,curso_id):
         for sub in Submission.objects.filter(assignment__curso=curso):
             val=request.POST.get(f'grade_{sub.id}')
             if val is not None and val.strip() != '':
+               
                 try:
-                    sub.grade = val.strip()
+                    nota = val.strip().replace(',', '.')
+                    sub.grade = nota
                     sub.feedback = request.POST.get(f'feedback_{sub.id}', '')
                     sub.save()
-                except (ValueError, TypeError, InvalidOperation):
-                    messages.error(request, f'No se pudo guardar la nota del estudiante {sub.student}.')
+                except (ValueError, TypeError, InvalidOperation) as error:
+                    messages.error(
+                        request,
+                        f'No se pudo guardar la nota del estudiante {sub.student}: {error}'
+                    )
         messages.success(request,'Notas de tareas guardadas.')
     return render(request,'users/grade_assignments.html',{'curso':curso,'submissions':Submission.objects.filter(assignment__curso=curso).select_related('student','assignment')})
 @role_required('teacher')
